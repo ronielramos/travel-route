@@ -4,18 +4,24 @@
 
 ### Production version
 
+Requirements: Docker
+
 ```text
 npm install
 
-npm start:prod
+npm start:prod:http
+npm start:prod:console
 ```
 
 ### Development version
 
+Requirements: NodeJS 12+
+
 ```text
 npm install
 
-npm run start:dev
+npm run start:dev:http
+npm run start:dev:console
 ```
 
 ### Tests
