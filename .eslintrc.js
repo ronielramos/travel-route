@@ -25,7 +25,7 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     camelcase: 'off',
-    'max-len': ['warn', 80],
+    'max-len': ['warn', 100],
     'max-lines': ['warn', 180],
     'no-unused-expressions': 'off',
     'no-unused-vars': 'off',
