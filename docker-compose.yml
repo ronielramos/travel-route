@@ -1,0 +1,17 @@
+version: "2.1"
+services:
+  app:
+    image: app-bex
+    build:
+      context: .
+    env_file: .env
+    environment:
+      - PORT=80
+    ports:
+      - "80:80"
+    restart: on-failure
+    networks:
+      - network
+
+networks:
+  network: {}
