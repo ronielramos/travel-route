@@ -1,6 +1,9 @@
+import CreateTravelRouteDTO from '../dtos/CreateTravelRoute.dto'
 
-export default class CreateRoute {
-  async execute (route: { origin: string, destiny: string, price: number }): Promise<string> {
+type CreatedRoute = string
+
+export default class CreateTravelRoute {
+  async execute (data: CreateTravelRouteDTO): Promise<CreatedRoute> {
     throw new Error('Not Implemented')
   }
 }

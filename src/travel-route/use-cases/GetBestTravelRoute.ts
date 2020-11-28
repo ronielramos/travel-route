@@ -1,5 +1,7 @@
+type BestTravelRoute = string // example: GRU - BRC - SCL - ORL - CDG
+
 export default class GetBestTravelRoute {
-  async execute (origin: string, destiny: string): Promise<string> {
+  async execute (data: GetBestTravelRoute): Promise<BestTravelRoute> {
     throw new Error('Not Implemented')
   }
 }

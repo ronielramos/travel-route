@@ -10,12 +10,6 @@ export default class TravelRouteController {
     })
   }
 
-  private ask (question: string): Promise<string> {
-    return new Promise<string>((resolve) => {
-      this.readLineInterface.question(question, (answer) => resolve(answer))
-    })
-  }
-
   async execute (): Promise<void> {
     const route = await this.ask('Please enter the route:')
 
@@ -24,5 +18,11 @@ export default class TravelRouteController {
       .map(route => route.trim())
 
     const [origin, destiny] = originAndDestiny
+  }
+
+  private ask (question: string): Promise<string> {
+    return new Promise<string>((resolve) => {
+      this.readLineInterface.question(question, (answer) => resolve(answer))
+    })
   }
 }

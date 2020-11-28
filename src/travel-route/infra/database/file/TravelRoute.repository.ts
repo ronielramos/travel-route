@@ -1,12 +1,13 @@
 import { ITravelRouteRepository } from '../ITravelRoute.repository'
-import TravelRouteDTO from '../../../dtos/TravelRoute.dto'
+import CreateTravelRouteDTO from '../../../dtos/CreateTravelRoute.dto'
+import GetTravelRouteDTO from '../../../dtos/GetTravelRoute.dto'
 
 export default class TravelRouteRepository implements ITravelRouteRepository {
-  getAll (): Promise<TravelRouteDTO[]> {
+  getAll (): Promise<GetTravelRouteDTO[]> {
     throw new Error('Method not implemented.')
   }
 
-  create (route: TravelRouteDTO): Promise<void> {
+  create (data: CreateTravelRouteDTO): Promise<void> {
     throw new Error('Method not implemented.')
   }
 }
