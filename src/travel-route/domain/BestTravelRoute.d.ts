@@ -1,5 +1,4 @@
-export interface Route {
-  origin: string
-  destiny: string;
-  price: number;
+export interface Travel {
+  origin: string;
+  destination: string;
 }
