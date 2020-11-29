@@ -3,54 +3,125 @@ import { Airport, BestTravelRouteFound, Edge, Graph, Node, Travel } from './Best
 
 export default class BestTravelRoute {
   private graph: Graph
+  private paths: Edge[][]
 
   constructor () {
     this.graph = {
       nodes: [],
       edges: []
     }
+
+    this.paths = []
   }
 
   find (travel: Travel, travelRoutes: GetTravelRouteDTO[]): BestTravelRouteFound {
     const visitedAirports = [travel.origin]
     const airportsAvaliable = this.getAirportsAvaliable(travelRoutes)
 
-    let openEdge: boolean
+    this.graph.nodes = this.createNodes(airportsAvaliable)
 
-    this.graph.nodes = this.createNodes(visitedAirports, airportsAvaliable)
+    const initialNodeIndex = this.graph.nodes.findIndex(node => node.name === travel.origin)
+    const initialNode = this.graph.nodes[initialNodeIndex] as Node
+
+    initialNode.price = 0
+    initialNode.visited = true
+
+    let bestEdge: Edge | undefined
+    let destinationFoud = false
 
     do {
       const createdEdges = this.createEdges(visitedAirports, travelRoutes)
-
       this.graph.edges.push(...createdEdges)
 
-      openEdge = this.findBestEdge(visitedAirports, travel.destination)
+      bestEdge = this.findBestEdge(this.graph.edges, travel.destination)
+      if (!bestEdge) break
 
-      if (visitedAirports[visitedAirports.length - 1]?.includes(travel.destination)) return visitedAirports.join(' - ')
-    } while (openEdge)
+      visitedAirports.push(bestEdge.destination.name)
 
-    return ''
+      this.sortPaths(bestEdge, this.paths)
+
+      destinationFoud = visitedAirports.includes(travel.destination)
+    } while (!destinationFoud)
+
+    const bestPathToDestination = this.findBestPath(this.paths, travel.destination)
+
+    return bestPathToDestination ? `${travel.origin} - ${bestPathToDestination}` : ''
+  }
+
+  private sortPaths (selectedEdge: Edge, paths: Edge[][]) {
+    let sorted = false
+
+    paths.forEach((edges) => {
+      const lastIndexOnEdge = (edges.length - 1)
+
+      const lastEdge = edges[lastIndexOnEdge]
+
+      const edgeIsFound = !!lastEdge && (lastEdge.destination === selectedEdge.origin)
+
+      if (edgeIsFound) {
+        edges.push(selectedEdge)
+        sorted = true
+      }
+
+      if (!!lastEdge && lastEdge.origin === selectedEdge.origin) {
+        const othersEdges = edges.length > 1
+          ? edges.filter((_edge, index) => index <= (lastIndexOnEdge - 1))
+          : []
+
+        paths.push([...othersEdges, selectedEdge])
+        sorted = true
+      }
+    })
+
+    if (!sorted) paths.push([selectedEdge])
+    return sorted
+  }
+
+  private findBestPath (paths: Edge[][], destinationAirport: Airport) {
+    const pathsToDestination = paths
+      .filter(path => !!path.find(edge => edge.destination.name === destinationAirport))
+      .map(path => {
+        const totalPrice = path
+          .map(path => path.price)
+          .reduce((prev, current) => prev + current)
+
+        const completeRoute = path
+          .map(path => path.destination.name)
+          .reduce((prev, curr) => `${prev} - ${curr}`)
+
+        return {
+          completeRoute,
+          totalPrice
+        }
+      })
+
+    return pathsToDestination
+      .sort((a, b) => a.totalPrice - b.totalPrice)
+      .pop()
+      ?.completeRoute
   }
 
   private findBestEdge (
-    visitedAirports: Airport[],
+    edges: Edge[],
     finalDestination: Airport
   ) {
-    if (this.graph.edges.length === 0) return false
+    if (edges.length === 0) return
 
-    const selectedEdge = this.graph.edges
-      .filter(edge => !edge.visited || !edge.destination.visited)
+    const selectedEdgeOptions = edges
+      .filter(edge => !edge.destination.visited)
+
+    if (selectedEdgeOptions.length === 0) return
+
+    const selectedEdge = selectedEdgeOptions
       .reduce((prev, current) => (prev.price > current.price) ? current : prev)
 
     selectedEdge.visited = true
     selectedEdge.destination.visited = true
     selectedEdge.destination.price = selectedEdge.price
 
-    if (selectedEdge.origin.name === finalDestination) return false
+    if (selectedEdge.origin.name === finalDestination) return
 
-    visitedAirports.push(selectedEdge.origin.name + ' - ' + selectedEdge.destination.name)
-
-    return true
+    return selectedEdge
   }
 
   private createEdges (
@@ -72,7 +143,7 @@ export default class BestTravelRoute {
         const destinationNodeIndex = this.graph.nodes
           .findIndex(node => node.name === route.destination && !node.visited)
 
-        if (destinationNodeIndex <= 0) return null
+        if (destinationNodeIndex < 0) return null
 
         const currentEdge: Edge = {
           destination: this.graph.nodes[destinationNodeIndex] as Node,
@@ -88,19 +159,14 @@ export default class BestTravelRoute {
     return createdEdges
   }
 
-  private createNodes (
-    visitedAirports: Airport[],
-    airportsAvaliable: Set<Airport>
-  ) {
+  private createNodes (airportsAvaliable: Set<Airport>) {
     const createdNodes: Node[] = []
 
     airportsAvaliable.forEach(airport => {
-      const airportAlreadyVisited = visitedAirports.includes(airport)
-
       const currentNode: Node = {
         name: airport,
-        visited: airportAlreadyVisited,
-        price: airportAlreadyVisited ? 0 : Infinity
+        visited: false,
+        price: Infinity
       }
 
       createdNodes.push(currentNode)
