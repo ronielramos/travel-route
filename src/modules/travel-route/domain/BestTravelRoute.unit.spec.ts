@@ -27,8 +27,7 @@ describe('UNIT | BestTravelRoute', () => {
       { origin: 'ORL', destination: 'CDG', price: 5 },
       { origin: 'SCL', destination: 'ORL', price: 20 },
 
-      { origin: 'BRC', destination: 'GRU', price: 20 },
-      { origin: 'BRC', destination: 'CDG', price: 20 }
+      { origin: 'BRC', destination: 'GRU', price: 100 }
     ]
   })
 
@@ -79,16 +78,7 @@ describe('UNIT | BestTravelRoute', () => {
         route.should.be.equal('')
       })
 
-      it('BRC-CDG', () => {
-        const bestTravelRoute = new BestTravelRoute()
-
-        const travelRoute: TravelRouteForTest = { origin: 'BRC', destination: 'CDG' }
-        const route = bestTravelRoute.find(travelRoute, travelRoutes)
-
-        route.should.be.equal('BRC - CDG')
-      })
-
-      it.only('BRC-GRU', () => {
+      it('BRC-GRU', () => {
         const bestTravelRoute = new BestTravelRoute()
 
         const travelRoute: TravelRouteForTest = { origin: 'BRC', destination: 'GRU' }
