@@ -1,5 +1,17 @@
+/**
+ * @example 'GRU'
+ */
 export type Airport = string
+
+/**
+ * @example '50' | '50.00'
+ */
 export type Dollar = number
+
+/**
+ * @example 'GRU - BRC'
+ */
+export type SingleRoute = string
 
 export type Travel = {
   origin: Airport
