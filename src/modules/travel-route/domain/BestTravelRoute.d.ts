@@ -13,13 +13,13 @@ export type Dollar = number
  */
 export type SingleRoute = string
 
-export type Travel = {
-  origin: Airport
-  destination: Airport
-}
+/**
+ * @example travel = { origin: 'GRU', destination: 'BRC' }
+ */
+export type Travel = { origin: Airport, destination: Airport }
 
 /**
- * @example 'GRU - BRC - SCL - ORL - CDG'
+ * @example 'GRU - BRC - SCL - ORL - CDG > $40'
 */
 export type BestTravelRouteFound = string
 
