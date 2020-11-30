@@ -39,7 +39,7 @@ describe('UNIT | BestTravelRoute', () => {
         const travelRoute: TravelRouteForTest = { origin: 'GRU', destination: 'CDG' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
-        route.should.be.equal('GRU - BRC - SCL - ORL - CDG')
+        route.should.be.equal('GRU - BRC - SCL - ORL - CDG > $40')
       })
 
       it('GRU-ORL', () => {
@@ -48,7 +48,7 @@ describe('UNIT | BestTravelRoute', () => {
         const travelRoute: TravelRouteForTest = { origin: 'GRU', destination: 'ORL' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
-        route.should.be.equal('GRU - BRC - SCL - ORL')
+        route.should.be.equal('GRU - BRC - SCL - ORL > $35')
       })
 
       it('BRC-ORL', () => {
@@ -57,7 +57,7 @@ describe('UNIT | BestTravelRoute', () => {
         const travelRoute: TravelRouteForTest = { origin: 'BRC', destination: 'ORL' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
-        route.should.be.equal('BRC - SCL - ORL')
+        route.should.be.equal('BRC - SCL - ORL > $25')
       })
 
       it('CDG-GRU', () => {
@@ -84,7 +84,7 @@ describe('UNIT | BestTravelRoute', () => {
         const travelRoute: TravelRouteForTest = { origin: 'BRC', destination: 'GRU' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
-        route.should.be.equal('BRC - GRU')
+        route.should.be.equal('BRC - GRU > $100')
       })
     })
   })
