@@ -8,11 +8,6 @@ export type Airport = string
  */
 export type Dollar = number
 
-/**
- * @example travel = { origin: 'GRU', destination: 'BRC' }
- */
-export type Travel = { origin: Airport, destination: Airport }
-
 export type Node = {
   name: Airport
   price: Dollar
