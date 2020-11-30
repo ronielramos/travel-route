@@ -1,5 +1,6 @@
 import { CreatedTravelRouteDTO } from '../dtos/CreateTravelRoute.dto'
-import { Airport, BestTravelRouteFound, Edge, Graph, Node, Travel } from './BestTravelRoute.d'
+import { TravelRouteFoundDTO } from '../dtos/GetTravelRoute.dto'
+import { Airport, Edge, Graph, Node, Travel } from './BestTravelRoute.d'
 
 export default class BestTravelRoute {
   private graph: Graph
@@ -14,7 +15,7 @@ export default class BestTravelRoute {
     this.paths = []
   }
 
-  find (travel: Travel, travelRoutes: CreatedTravelRouteDTO[]): BestTravelRouteFound {
+  find (travel: Travel, travelRoutes: CreatedTravelRouteDTO[]): TravelRouteFoundDTO {
     const visitedAirports = [travel.origin]
     const airportsAvaliable = this.getAirportsAvaliable(travelRoutes)
 

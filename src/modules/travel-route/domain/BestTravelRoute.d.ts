@@ -9,19 +9,9 @@ export type Airport = string
 export type Dollar = number
 
 /**
- * @example 'GRU - BRC'
- */
-export type SingleRoute = string
-
-/**
  * @example travel = { origin: 'GRU', destination: 'BRC' }
  */
 export type Travel = { origin: Airport, destination: Airport }
-
-/**
- * @example 'GRU - BRC - SCL - ORL - CDG > $40'
-*/
-export type BestTravelRouteFound = string
 
 export type Node = {
   name: Airport
