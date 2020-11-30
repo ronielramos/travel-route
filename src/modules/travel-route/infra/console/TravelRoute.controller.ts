@@ -1,28 +1,57 @@
 import readline, { Interface } from 'readline'
 
-export default class TravelRouteController {
-  private readLineInterface: Interface
+import { IConsoleController } from '../../../../shared/infra/console/IConsoleController'
+import ILogger from '../../../../shared/infra/logger/ILogger'
+import { Airport } from '../../domain/BestTravelRoute.d'
+import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
+import { IUseCase } from '../../use-cases/IUseCase'
 
-  constructor () {
+export default class TravelRouteController implements IConsoleController {
+  private readLineInterface: Interface
+  private inputValidator: RegExp
+
+  constructor (
+    private getTravelRoute: IUseCase<TravelRouteToFindDTO, TravelRouteFoundDTO>,
+    private logger: ILogger
+  ) {
     this.readLineInterface = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     })
+
+    this.inputValidator = /[a-z]-[a-z]/gi
   }
 
   async execute (): Promise<void> {
-    const route = await this.ask('Please enter the route:')
+    let route = ''
 
-    const originAndDestiny = route
+    do {
+      route = await this.ask('Please enter the route on format "ORIGIN-DESTINATION":')
+    } while (!this.isValidTravelRoute(route))
+
+    const originAndDestination = route
       .split('-')
-      .map(route => route.trim())
+      .map(route => route
+        .toUpperCase()
+        .trim()
+      )
 
-    const [origin, destiny] = originAndDestiny
+    const [origin, destination] = originAndDestination as [Airport, Airport]
+
+    const travelRouteFound = await this.getTravelRoute.execute({ origin, destination })
+
+    this.logger.info('best route: ' + travelRouteFound)
+
+    return this.execute()
   }
 
   private ask (question: string): Promise<string> {
     return new Promise<string>((resolve) => {
       this.readLineInterface.question(question, (answer) => resolve(answer))
     })
+  }
+
+  private isValidTravelRoute (route: string): boolean {
+    return this.inputValidator.test(route)
   }
 }
