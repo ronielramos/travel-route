@@ -1,4 +1,4 @@
-import GetTravelRouteDTO from '../dtos/GetTravelRoute.dto'
+import { CreatedTravelRouteDTO } from '../dtos/CreateTravelRoute.dto'
 import { Airport, BestTravelRouteFound, Edge, Graph, Node, Travel } from './BestTravelRoute.d'
 
 export default class BestTravelRoute {
@@ -14,7 +14,7 @@ export default class BestTravelRoute {
     this.paths = []
   }
 
-  find (travel: Travel, travelRoutes: GetTravelRouteDTO[]): BestTravelRouteFound {
+  find (travel: Travel, travelRoutes: CreatedTravelRouteDTO[]): BestTravelRouteFound {
     const visitedAirports = [travel.origin]
     const airportsAvaliable = this.getAirportsAvaliable(travelRoutes)
 
@@ -48,6 +48,33 @@ export default class BestTravelRoute {
     return bestPathToDestination ? `${travel.origin} - ${bestPathToDestination}` : ''
   }
 
+  private findBestPath (paths: Edge[][], destinationAirport: Airport) {
+    const pathsToDestination = paths
+      .filter(path => !!path.find(edge => edge.destination.name === destinationAirport))
+      .map(path => {
+        const lastIndex = path.length - 1
+
+        const pathPrice = path[lastIndex]?.price as number
+
+        return {
+          path,
+          price: pathPrice
+        }
+      })
+
+    const pathFound = pathsToDestination
+      .sort((pathA, pathB) => pathA.price - pathB.price)
+      .pop()
+
+    const completeRoute = pathFound?.path
+      .map(path => path.destination.name)
+      .reduce((prev, curr) => `${prev} - ${curr}`)
+
+    return completeRoute && pathFound?.price
+      ? `${completeRoute} > $${pathFound.price}`
+      : ''
+  }
+
   private sortPaths (selectedEdge: Edge, paths: Edge[][]) {
     let sorted = false
 
@@ -77,30 +104,6 @@ export default class BestTravelRoute {
     return sorted
   }
 
-  private findBestPath (paths: Edge[][], destinationAirport: Airport) {
-    const pathsToDestination = paths
-      .filter(path => !!path.find(edge => edge.destination.name === destinationAirport))
-      .map(path => {
-        const totalPrice = path
-          .map(path => path.price)
-          .reduce((prev, current) => prev + current)
-
-        const completeRoute = path
-          .map(path => path.destination.name)
-          .reduce((prev, curr) => `${prev} - ${curr}`)
-
-        return {
-          completeRoute,
-          totalPrice
-        }
-      })
-
-    return pathsToDestination
-      .sort((a, b) => a.totalPrice - b.totalPrice)
-      .pop()
-      ?.completeRoute
-  }
-
   private findBestEdge (
     edges: Edge[],
     finalDestination: Airport
@@ -126,7 +129,7 @@ export default class BestTravelRoute {
 
   private createEdges (
     visitedAirports: Airport[],
-    travelRoutes: GetTravelRouteDTO[]
+    travelRoutes: CreatedTravelRouteDTO[]
   ) {
     const lastAirport = (visitedAirports[visitedAirports.length - 1])?.split('-').pop()?.trim() as Airport
 
