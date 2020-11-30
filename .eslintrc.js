@@ -24,9 +24,11 @@ module.exports = {
   rules: {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     camelcase: 'off',
     'max-len': ['warn', 120],
     'max-lines': ['warn', 200],
+    'no-useless-constructor': 'off',
     'no-unused-expressions': 'off',
     'no-unused-vars': 'off',
     'no-useless-catch': 'off'
