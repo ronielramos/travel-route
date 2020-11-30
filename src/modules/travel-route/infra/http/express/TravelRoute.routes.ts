@@ -1,8 +1,8 @@
 import { errors } from 'celebrate'
 import Router from 'express'
 
-import CreateTravelRoute from '../../../use-cases/CreateTravelRoute/CreateTravelRoute'
-import GetBestTravelRoute from '../../../use-cases/GetBestTravelRoute'
+import CreateTravelRoute from '../../../use-cases/create-travel-route/CreateTravelRoute'
+import GetBestTravelRoute from '../../../use-cases/get-best-travel-route.ts/GetBestTravelRoute'
 import { validateCreateTravelRouteInputMiddleware } from './middlewares/validateCreateTravelRouteInput.middlware'
 import { validateGetTravelRouteInputMiddleware } from './middlewares/validateGetTravelRouteInput.middlware'
 import TravelRouteController from './TravelRoute.controller'
