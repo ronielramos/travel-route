@@ -1,9 +1,8 @@
-import CreateTravelRouteDTO from '../dtos/CreateTravelRoute.dto'
+import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../dtos/CreateTravelRoute.dto'
+import { IUseCase } from './IUseCase'
 
-type CreatedRoute = string
-
-export default class CreateTravelRoute {
-  async execute (data: CreateTravelRouteDTO): Promise<CreatedRoute> {
+export default class CreateTravelRoute implements IUseCase<TravelRouteToCreateDTO, CreatedTravelRouteDTO> {
+  async execute (data: TravelRouteToCreateDTO): Promise<CreatedTravelRouteDTO> {
     throw new Error('Not Implemented')
   }
 }
