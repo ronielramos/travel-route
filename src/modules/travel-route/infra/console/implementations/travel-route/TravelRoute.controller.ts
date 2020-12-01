@@ -1,9 +1,9 @@
-import ILogger from '../../../../../shared/infra/logger/ILogger'
-import { IConsoleAccess } from '../../../../../shared/providers/console-access/IConsoleAccess'
-import { Airport } from '../../../domain/BestTravelRoute.d'
-import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../../dtos/GetTravelRoute.dto'
-import { IUseCase } from '../../../use-cases/IUseCase'
-import { IConsoleController } from '../IConsoleController'
+import ILogger from '../../../../../../shared/infra/logger/ILogger'
+import { IConsoleAccess } from '../../../../../../shared/providers/console-access/IConsoleAccess'
+import { Airport } from '../../../../domain/BestTravelRoute.d'
+import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../../../dtos/GetTravelRoute.dto'
+import { IUseCase } from '../../../../use-cases/IUseCase'
+import { IConsoleController } from '../../IConsoleController'
 
 export default class TravelRouteController implements IConsoleController {
   private inputValidator: RegExp
