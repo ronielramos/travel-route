@@ -6,9 +6,12 @@
   "scripts": {
     "build": "tsc",
     "ci": "npm run lint && npm run test && npm run build",
-    "dcup": "docker-compose -f docker-compose.yml up --build",
-    "start:dev:http": "nodemon src/shared/infra/http/express/app.ts",
-    "start:dev:console": "nodemon src/shared/infra/console/app.ts",
+    "dev:console": "nodemon src/shared/infra/console/app.ts",
+    "dev:init": "nodemon src/shared/infra/console/initial.app.ts",
+    "dev:server": "nodemon src/shared/infra/http/express/app.ts",
+    "start:console": "node dist/shared/infra/console/app.js",
+    "start:init": "node dist/shared/infra/console/initial.app.js",
+    "start:server": "node dist/shared/infra/http/express/app.js",
     "lint": "eslint src/** --ext .ts",
     "lint:fix": "eslint src/** --ext .ts --fix",
     "prebuild": "rimraf dist",
@@ -29,7 +32,8 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "helmet": "^4.2.0"
+    "helmet": "^4.2.0",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
