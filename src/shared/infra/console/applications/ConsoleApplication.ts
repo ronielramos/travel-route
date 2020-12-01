@@ -1,5 +1,5 @@
-import ILogger from '../logger/ILogger'
-import { IConsoleController } from './IConsoleController'
+import { IConsoleController } from '../../../../modules/travel-route/infra/console/IConsoleController'
+import ILogger from '../../logger/ILogger'
 
 export default class CommandLineApplication {
   constructor (private logger: ILogger) {}

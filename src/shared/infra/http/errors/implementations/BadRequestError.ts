@@ -1,4 +1,4 @@
-import { HttpError } from './IHttpError'
+import { HttpError } from '../IHttpError'
 
 export class BadRequestError extends Error implements HttpError {
   readonly name = 'BadRequestError'

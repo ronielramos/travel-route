@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 
-import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../../../dtos/CreateTravelRoute.dto'
-import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../../dtos/GetTravelRoute.dto'
-import { IUseCase } from '../../../use-cases/IUseCase'
+import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../../../../dtos/CreateTravelRoute.dto'
+import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../../../dtos/GetTravelRoute.dto'
+import { IUseCase } from '../../../../use-cases/IUseCase'
 
 export default class TravelRouteController {
   constructor (
