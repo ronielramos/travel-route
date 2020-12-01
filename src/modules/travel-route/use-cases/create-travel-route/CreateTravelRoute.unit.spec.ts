@@ -1,7 +1,9 @@
-import CreateTravelRoute from './CreateTravelRoute'
-import FakeTravelRouteRepository from '../../infra/database/fakes/FakeTravelRoute.repository'
-import { TravelRouteToCreateDTO } from '../../dtos/CreateTravelRoute.dto'
 import { should } from 'chai'
+
+import { TravelRouteToCreateDTO } from '../../dtos/CreateTravelRoute.dto'
+import FakeTravelRouteRepository from '../../infra/database/implementations/FakeTravelRoute.repository'
+import CreateTravelRoute from './CreateTravelRoute'
+
 describe('UNIT | CreateTravelRoute', () => {
   before(() => {
     should()
