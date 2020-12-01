@@ -14,7 +14,10 @@ export class ConsoleAccess implements IConsoleAccess {
 
   ask (question: string): Promise<string> {
     return new Promise<string>((resolve) => {
-      this.readLineInterface.question(question, (answer) => resolve(answer))
+      this.readLineInterface.question(question, (answer) => {
+        this.readLineInterface.close()
+        resolve(answer)
+      })
     })
   }
 }

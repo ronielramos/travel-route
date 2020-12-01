@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import travelRouteRouter from '../../../../modules/travel-route/infra/http/express/travelRoute.routes'
-import ConsoleLogger from '../../logger/implamentations/ConsoleLogger'
+import ConsoleLogger from '../../logger/implementations/ConsoleLogger'
 import ExpressServer from './ExpressServer'
 import handleHttpError from './handleHttpError'
 import handleUncaughtException from './handleUncaughtException'
