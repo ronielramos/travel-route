@@ -1,16 +1,14 @@
 import { IFileAccess } from '../../../../../shared/providers/file-access/IFileAccess'
 import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../../../dtos/CreateTravelRoute.dto'
 import { ITravelRouteRepository } from '../ITravelRoute.repository'
+import { INITIAL_DATA_SOURCE } from '../utils/initial-data-source-name'
 
 export default class TravelRouteRepository implements ITravelRouteRepository {
   private fileAddress?: string
 
   constructor (
-    private fileAccess: IFileAccess,
-    public readonly fileNameToInitilize: string
-  ) {
-    this.initialize(fileNameToInitilize)
-  }
+    private fileAccess: IFileAccess
+  ) {}
 
   async initialize (file: string) {
     const fileToPersist = await this.fileAccess.read(file)

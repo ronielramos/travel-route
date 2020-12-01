@@ -1,5 +1,10 @@
 import { fileAccess } from '../../../../shared/providers/file-access'
 import TravelRouteRepository from './implementations/TravelRoute.repository'
-import { FileToPersist } from './utils/file.enum'
+import { INITIAL_DATA_SOURCE } from './utils/initial-data-source-name'
 
-export const travelRouteRepository = new TravelRouteRepository(fileAccess, FileToPersist.file)
+const travelRouteRepository = new TravelRouteRepository(fileAccess)
+
+travelRouteRepository
+  .initialize(INITIAL_DATA_SOURCE)
+
+export { travelRouteRepository }
