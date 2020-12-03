@@ -26,13 +26,13 @@ export default class TravelRouteController {
   }
 
   async getOne (
-    req: Request<never, never, TravelRouteToFindDTO, never>,
+    req: Request<{ routeName: string }, never, never, never>,
     res: Response<{ bestTravelFound: string }>,
     next: NextFunction
   ) {
     try {
-      const travelRouteToFind = req.body
-      const bestTravelFound = await this.getBestTravelRoute.execute(travelRouteToFind)
+      const [origin, destination] = req.params.routeName.toUpperCase().split('-') as [string, string]
+      const bestTravelFound = await this.getBestTravelRoute.execute({ origin, destination })
 
       res.status(200).json({ bestTravelFound })
     } catch (error) {

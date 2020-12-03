@@ -1,13 +1,10 @@
 import { celebrate, Joi, Segments } from 'celebrate'
 
-import { TravelRouteToFindDTO } from '../../../../dtos/GetTravelRoute.dto'
-
 export const validateGetTravelRouteInputMiddleware = celebrate({
-  [Segments.BODY]: Joi
-    .object<TravelRouteToFindDTO>()
+  [Segments.PARAMS]: Joi
+    .object<{ routeName: string }>()
     .keys({
-      origin: Joi.string().required(),
-      destination: Joi.string().required()
+      routeName: Joi.string().pattern(/[a-z]-[a-z]/i, 'ORIGIN-DESTINATION').required()
     })
     .required()
     .unknown()
