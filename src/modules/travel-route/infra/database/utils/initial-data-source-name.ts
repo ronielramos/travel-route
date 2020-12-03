@@ -1,3 +1,3 @@
 import path from 'path'
 
-export const INITIAL_DATA_SOURCE = path.join('cache', 'production', 'initial-data-source.txt')
+export const INITIAL_DATA_SOURCE_ADDRESS = path.join('cache', 'production', 'initial-data-source.txt')

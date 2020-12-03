@@ -2,6 +2,6 @@ import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../../dtos/Create
 
 export interface ITravelRouteRepository {
   getAll(): Promise<CreatedTravelRouteDTO[]>
-  create(data: TravelRouteToCreateDTO): Promise<CreatedTravelRouteDTO>
-  initialize(initialFile: string): void | Promise<void>
+  create(travelRoute: TravelRouteToCreateDTO): Promise<CreatedTravelRouteDTO>
+  initialize(initialFileAddress: string): void | Promise<void>
 }
