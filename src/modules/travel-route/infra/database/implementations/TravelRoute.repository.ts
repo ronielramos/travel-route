@@ -1,7 +1,6 @@
 import { IFileAccess } from '../../../../../shared/providers/file-access/IFileAccess'
 import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../../../dtos/CreateTravelRoute.dto'
 import { ITravelRouteRepository } from '../ITravelRoute.repository'
-import { INITIAL_DATA_SOURCE } from '../utils/initial-data-source-name'
 
 export default class TravelRouteRepository implements ITravelRouteRepository {
   private fileAddress?: string
@@ -16,14 +15,14 @@ export default class TravelRouteRepository implements ITravelRouteRepository {
     this.fileAddress = fileToPersist
       .toString()
       .split('\n')
-      .pop()
+      .find(fileName => fileName)
   }
 
   async create (data: TravelRouteToCreateDTO): Promise<CreatedTravelRouteDTO> {
     if (!this.fileAddress) throw new Error('File to persist data was not provided!')
 
     const [origin, destination] = data.routeName.split('-') as [string, string]
-    const routeToSaveOnFile = `${origin},${destination},${data.routePrice}`
+    const routeToSaveOnFile = `\n${origin},${destination},${data.routePrice}`
 
     await this.fileAccess.write(this.fileAddress, routeToSaveOnFile)
 
