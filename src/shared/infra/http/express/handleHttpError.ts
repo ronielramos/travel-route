@@ -10,7 +10,7 @@ export default function handleHttpError (
   _next: NextFunction
 ): void {
   const statusCode = error.statusCode ?? 500
-  const message = statusCode === 500 ? 'Internal Error' : error.message
+  const message = statusCode === 500 ? 'Internal Server Error' : error.message
 
-  res.status(error.statusCode).json({ message })
+  res.status(statusCode).json({ message })
 }
