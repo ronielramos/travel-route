@@ -1,9 +1,9 @@
 import { errors } from 'celebrate'
 import Router from 'express'
 
-import { travelRouteController } from './controllers'
-import { validateCreateTravelRouteInputMiddleware } from './middlewares/validateCreateTravelRouteInput.middlware'
-import { validateGetTravelRouteInputMiddleware } from './middlewares/validateGetTravelRouteInput.middlware'
+import { travelRouteController } from '../controllers'
+import { validateCreateTravelRouteInputMiddleware } from '../middlewares/validateCreateTravelRouteInput.middlware'
+import { validateGetTravelRouteInputMiddleware } from '../middlewares/validateGetTravelRouteInput.middlware'
 
 const travelRouteRouter = Router()
 
@@ -13,8 +13,8 @@ travelRouteRouter.post(
   travelRouteController.create.bind(travelRouteController)
 )
 
-travelRouteRouter.post(
-  '/priceless',
+travelRouteRouter.get(
+  '/:routeName/priceless',
   validateGetTravelRouteInputMiddleware,
   travelRouteController.getOne.bind(travelRouteController)
 )
