@@ -8,50 +8,45 @@ export class Path implements IPath {
     this.paths = []
   }
 
-  addEdgeOnPath (selectedEdge: Edge): boolean {
-    let sorted = false
+  addEdgeOnPath (selectedEdge: Edge): void {
+    let createNewPath = true
 
     this.paths.forEach((edges) => {
       const lastIndexOnEdge = (edges.length - 1)
-
       const lastEdge = edges[lastIndexOnEdge]
 
-      const edgeIsFound = !!lastEdge && (lastEdge.destination === selectedEdge.origin)
-
-      if (edgeIsFound) {
+      const edgeFoundOnSamePath = !!lastEdge && (lastEdge.destination === selectedEdge.origin)
+      if (edgeFoundOnSamePath) {
         edges.push(selectedEdge)
-        sorted = true
+        createNewPath = false
       }
 
-      if (!!lastEdge && lastEdge.origin === selectedEdge.origin) {
-        const othersEdges = edges.length > 1
+      const edgeFoundOnDifferentPath = !!lastEdge && lastEdge.origin === selectedEdge.origin
+      if (edgeFoundOnDifferentPath) {
+        const edgesCrossedToArriveLastEdge = edges.length > 1
           ? edges.filter((_edge, index) => index <= (lastIndexOnEdge - 1))
           : []
 
-        this.paths.push([...othersEdges, selectedEdge])
-        sorted = true
+        this.paths.push([...edgesCrossedToArriveLastEdge, selectedEdge])
+        createNewPath = false
       }
     })
 
-    if (!sorted) this.paths.push([selectedEdge])
-    return sorted
+    if (createNewPath) this.paths.push([selectedEdge])
   }
 
   findBestPath (destination: Airport): string {
-    const pathsToDestination = this.paths
+    const pathFound = this.paths
       .filter(path => !!path.find(edge => edge.destination.name === destination))
       .map(path => {
         const lastIndex = path.length - 1
-
-        const pathPrice = path[lastIndex]?.price as number
+        const pathPrice = path[lastIndex]?.price ?? 0
 
         return {
           path,
           price: pathPrice
         }
       })
-
-    const pathFound = pathsToDestination
       .sort((pathA, pathB) => pathA.price - pathB.price)
       .pop()
 
@@ -59,8 +54,6 @@ export class Path implements IPath {
       .map(path => path.destination.name)
       .reduce((prev, curr) => `${prev} - ${curr}`)
 
-    return completeRoute && pathFound?.price
-      ? `${completeRoute} > $${pathFound.price}`
-      : ''
+    return (completeRoute && pathFound?.price) ? `${completeRoute} > $${pathFound.price}` : ''
   }
 }

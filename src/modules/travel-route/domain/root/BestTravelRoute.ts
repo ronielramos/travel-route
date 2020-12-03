@@ -7,42 +7,46 @@ import { IPath } from '../value-objecs/IPath'
 export default class BestTravelRoute {
   constructor (private graph: IGraph, private path: IPath) {}
 
-  find (travel: TravelRouteToFindDTO, travelRoutes: CreatedTravelRouteDTO[]): TravelRouteFoundDTO {
-    const visitedAirports = [travel.origin]
+  find ({ origin, destination }: TravelRouteToFindDTO, travelRoutes: CreatedTravelRouteDTO[]): TravelRouteFoundDTO {
+    const visitedAirports = [origin]
     const airportsAvaliable = this.getAirportsAvaliable(travelRoutes)
 
     const initialNode = this.graph
       .createNodes(airportsAvaliable)
-      .getOneNode(travel.origin)
+      .getOneNode(origin)
 
     initialNode.price = 0
     initialNode.visited = true
 
-    let destinationFoud = false
+    let searchWasFinished = false
 
     do {
       const lastAirport = (visitedAirports[visitedAirports.length - 1]) as Airport
       const travelRoutesForAirport = travelRoutes.filter(route => route.origin === lastAirport)
+      const originNode = this.graph.getOneNode(lastAirport)
 
       const bestEdge = this.graph
-        .createEdges(lastAirport, travelRoutesForAirport)
-        .findBestEdge(travel.destination)
+        .createEdges(originNode, travelRoutesForAirport)
+        .findBestEdge(destination)
 
-      if (!bestEdge) break
+      if (bestEdge) {
+        visitedAirports.push(bestEdge.destination.name)
 
-      visitedAirports.push(bestEdge.destination.name)
+        this.path.addEdgeOnPath(bestEdge)
+      }
 
-      this.path.addEdgeOnPath(bestEdge)
+      const destinationFound = visitedAirports.includes(destination)
+      const edgesAreNotAvaliable = !bestEdge
 
-      destinationFoud = visitedAirports.includes(travel.destination)
-    } while (!destinationFoud)
+      searchWasFinished = (edgesAreNotAvaliable || destinationFound)
+    } while (!searchWasFinished)
 
-    const bestPathToDestination = this.path.findBestPath(travel.destination)
+    const bestPathToDestination = this.path.findBestPath(destination)
 
-    return bestPathToDestination ? `${travel.origin} - ${bestPathToDestination}` : ''
+    return bestPathToDestination ? `${origin} - ${bestPathToDestination}` : ''
   }
 
-  private getAirportsAvaliable (travelRoutes: { destination: Airport; origin: Airport; }[]) {
+  private getAirportsAvaliable (travelRoutes: CreatedTravelRouteDTO[]) {
     const airportsAvaliable = new Set<Airport>()
 
     travelRoutes.forEach(route => {

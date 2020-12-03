@@ -11,14 +11,9 @@ export class Graph implements IGraph {
     this.nodes = []
   }
 
-  createEdges (origin: Airport, travelRoutes: CreatedTravelRouteDTO[]) {
-    const travelRoutesForAirport = travelRoutes.filter(route => route.origin === origin)
-    const originNode = this.nodes.find(node => node.name === origin)
-
-    const priceUntilNow = this.edges.find(edge => edge.visited && edge.destination.name === origin)
-      ?.price ?? 0
-
-    if (!originNode) return this
+  createEdges (originNode: Node, travelRoutesForAirport: CreatedTravelRouteDTO[]) {
+    const edge = this.edges.find(edge => edge.visited && edge.destination === originNode)
+    const priceUntilNow = edge?.price ?? 0
 
     const createdEdges = travelRoutesForAirport
       .map(route => {
