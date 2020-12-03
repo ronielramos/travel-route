@@ -1,3 +1,3 @@
-import BestTravelRoute from './BestTravelRoute'
+import { BestTravelRouteFactory } from './factories/BestTravelRouteFactory'
 
-export const bestTravelRoute = new BestTravelRoute()
+export const bestTravelRouteFactory = new BestTravelRouteFactory()

@@ -20,8 +20,3 @@ export type Edge = {
   destination: Node
   visited: boolean
 }
-
-export type Graph = {
-  nodes: Node[]
-  edges: Edge[]
-}

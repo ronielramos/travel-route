@@ -1,7 +1,8 @@
 import { should } from 'chai'
 
+import { Dollar } from '../domain'
+import { BestTravelRouteFactory } from '../factories/BestTravelRouteFactory'
 import BestTravelRoute from './BestTravelRoute'
-import { Dollar } from './BestTravelRoute.d'
 
 type AirportsAvailableForTest = 'GRU' |'BRC' |'ORL' |'SCL' |'CDG'
 
@@ -13,11 +14,15 @@ type TravelRouteForTest = {
 describe('UNIT | BestTravelRoute', () => {
   let travelRoutes: (TravelRouteForTest & { price: Dollar })[]
 
+  let bestTravelRoute: BestTravelRoute
+
   before(() => {
     should()
   })
 
   beforeEach(() => {
+    bestTravelRoute = BestTravelRouteFactory.create()
+
     travelRoutes = [
       { origin: 'GRU', destination: 'BRC', price: 10 },
       { origin: 'BRC', destination: 'SCL', price: 5 },
@@ -34,8 +39,6 @@ describe('UNIT | BestTravelRoute', () => {
   context('When I have a route in format ORIGIN-DESTINATION to search the best priced path', () => {
     describe('Should find the best route for following origins and destinations', () => {
       it('GRU-CGD', () => {
-        const bestTravelRoute = new BestTravelRoute()
-
         const travelRoute: TravelRouteForTest = { origin: 'GRU', destination: 'CDG' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
@@ -43,8 +46,6 @@ describe('UNIT | BestTravelRoute', () => {
       })
 
       it('GRU-ORL', () => {
-        const bestTravelRoute = new BestTravelRoute()
-
         const travelRoute: TravelRouteForTest = { origin: 'GRU', destination: 'ORL' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
@@ -52,8 +53,6 @@ describe('UNIT | BestTravelRoute', () => {
       })
 
       it('BRC-ORL', () => {
-        const bestTravelRoute = new BestTravelRoute()
-
         const travelRoute: TravelRouteForTest = { origin: 'BRC', destination: 'ORL' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
@@ -61,8 +60,6 @@ describe('UNIT | BestTravelRoute', () => {
       })
 
       it('CDG-GRU', () => {
-        const bestTravelRoute = new BestTravelRoute()
-
         const travelRoute: TravelRouteForTest = { origin: 'CDG', destination: 'GRU' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
@@ -70,8 +67,6 @@ describe('UNIT | BestTravelRoute', () => {
       })
 
       it('ORL-BRC', () => {
-        const bestTravelRoute = new BestTravelRoute()
-
         const travelRoute: TravelRouteForTest = { origin: 'ORL', destination: 'BRC' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
@@ -79,8 +74,6 @@ describe('UNIT | BestTravelRoute', () => {
       })
 
       it('BRC-GRU', () => {
-        const bestTravelRoute = new BestTravelRoute()
-
         const travelRoute: TravelRouteForTest = { origin: 'BRC', destination: 'GRU' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
