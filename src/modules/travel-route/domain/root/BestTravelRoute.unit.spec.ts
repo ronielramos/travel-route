@@ -2,7 +2,7 @@ import { should } from 'chai'
 
 import { Dollar } from '../domain'
 import { BestTravelRouteFactory } from '../factories/BestTravelRouteFactory'
-import BestTravelRoute from './BestTravelRoute'
+import { IBestTravelRoute } from './IBestTravelRoute'
 
 type AirportsAvailableForTest = 'GRU' |'BRC' |'ORL' |'SCL' |'CDG'
 
@@ -14,14 +14,15 @@ type TravelRouteForTest = {
 describe('UNIT | BestTravelRoute', () => {
   let travelRoutes: (TravelRouteForTest & { price: Dollar })[]
 
-  let bestTravelRoute: BestTravelRoute
+  let bestTravelRoute: IBestTravelRoute
 
   before(() => {
     should()
   })
 
   beforeEach(() => {
-    bestTravelRoute = BestTravelRouteFactory.create()
+    const bestTravelRouteFactory = new BestTravelRouteFactory()
+    bestTravelRoute = bestTravelRouteFactory.makeBestTravelRoute()
 
     travelRoutes = [
       { origin: 'GRU', destination: 'BRC', price: 10 },
