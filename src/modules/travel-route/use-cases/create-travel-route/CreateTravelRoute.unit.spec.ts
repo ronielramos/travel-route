@@ -1,8 +1,8 @@
 import { should } from 'chai'
 
 import { TravelRouteToCreateDTO } from '../../dtos/CreateTravelRoute.dto'
-import FakeTravelRouteRepository from '../../infra/database/implementations/FakeTravelRoute.repository'
-import CreateTravelRoute from './CreateTravelRoute'
+import FakeTravelRouteRepository from '../../infra/database/repositories/implementations/FakeTravelRoute.repository'
+import CreateTravelRouteUseCase from './CreateTravelRoute.use-case'
 
 describe('UNIT | CreateTravelRoute', () => {
   before(() => {
@@ -12,7 +12,7 @@ describe('UNIT | CreateTravelRoute', () => {
   context('When I have to create a new route', () => {
     it('Should create a valid route', async () => {
       const travelRouteRepository = new FakeTravelRouteRepository()
-      const createTravelRoute = new CreateTravelRoute(travelRouteRepository)
+      const createTravelRoute = new CreateTravelRouteUseCase(travelRouteRepository)
 
       const travelRouteToCreate: TravelRouteToCreateDTO = {
         routeName: 'A-B',

@@ -4,9 +4,9 @@ import path from 'path'
 import { promisify } from 'util'
 
 import { fileAccess } from '../../../../shared/providers/file-access'
-import TravelRouteRepository from '../../infra/database/implementations/TravelRoute.repository'
-import { ITravelRouteRepository } from '../../infra/database/ITravelRoute.repository'
-import CreateTravelRoute from './CreateTravelRoute'
+import TravelRouteRepository from '../../infra/database/repositories/implementations/TravelRoute.repository'
+import { ITravelRouteRepository } from '../../infra/database/repositories/ITravelRoute.repository'
+import CreateTravelRouteUseCase from './CreateTravelRoute.use-case'
 
 describe('INTEGRATION | CreateTravelRoute', () => {
   let travelRouteRepository: ITravelRouteRepository
@@ -27,17 +27,8 @@ describe('INTEGRATION | CreateTravelRoute', () => {
   })
 
   beforeEach(async () => {
-    sourceOfPathToFile = path.join(
-      'cache',
-      'test',
-      'ebc1a29a-2a1c-402e-9b64-be6456e83147-CreateTravelRouteIntegration.source.txt'
-    )
-
-    pathToFile = path.join(
-      'cache',
-      'test',
-      '0e2810b9-dd7e-4c7d-86a2-7d29b94a14b3-CreateTravelRouteIntegration.file.txt'
-    )
+    sourceOfPathToFile = path.join('cache', 'test', 'ebc1a29a-2a1c-402e-9b64-be6456e83147.txt')
+    pathToFile = path.join('cache', 'test', '0e2810b9-dd7e-4c7d-86a2-7d29b94a14b3.txt')
 
     await writeFile(sourceOfPathToFile, pathToFile)
 
@@ -47,7 +38,7 @@ describe('INTEGRATION | CreateTravelRoute', () => {
 
   context('When I have to create a new route using a file repository', () => {
     it('Should persist one route on a file', async () => {
-      const createTravelRoute = new CreateTravelRoute(travelRouteRepository)
+      const createTravelRoute = new CreateTravelRouteUseCase(travelRouteRepository)
 
       await createTravelRoute.execute({ routeName: 'GRU-GDO', routePrice: 200 })
 
@@ -61,7 +52,7 @@ describe('INTEGRATION | CreateTravelRoute', () => {
     })
 
     it('Should persist two routes on a file', async () => {
-      const createTravelRoute = new CreateTravelRoute(travelRouteRepository)
+      const createTravelRoute = new CreateTravelRouteUseCase(travelRouteRepository)
 
       await createTravelRoute.execute({ routeName: 'GRU-SCL', routePrice: 1_000 })
       await createTravelRoute.execute({ routeName: 'SCL-GRU', routePrice: 500 })
