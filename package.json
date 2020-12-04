@@ -2,7 +2,7 @@
   "name": "bex",
   "version": "1.0.0",
   "description": "A simple Travel Route searcher",
-  "main": "src/app.ts",
+  "main": "src/shared/application/http/implementations/express/app.ts",
   "scripts": {
     "build": "tsc",
     "ci": "npm run lint && npm run test && npm run build",
