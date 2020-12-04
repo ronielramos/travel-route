@@ -2,8 +2,9 @@ import { errors } from 'celebrate'
 import Router from 'express'
 
 import { travelRouteController } from '../controllers'
-import { validateCreateTravelRouteInputMiddleware } from '../middlewares/validateCreateTravelRouteInput.middlware'
-import { validateGetTravelRouteInputMiddleware } from '../middlewares/validateGetTravelRouteInput.middlware'
+import { badRequestErrorParser } from '../middlewares/bad-request-error-parser.middleware'
+import { validateCreateTravelRouteInputMiddleware } from '../middlewares/validate-create-travel-route-input.middlware'
+import { validateGetTravelRouteInputMiddleware } from '../middlewares/validate-get-travel-route-input.middlware'
 
 const travelRouteRouter = Router()
 
@@ -19,6 +20,7 @@ travelRouteRouter.get(
   travelRouteController.getOne.bind(travelRouteController)
 )
 
+travelRouteRouter.use(badRequestErrorParser)
 travelRouteRouter.use(errors())
 
 export default travelRouteRouter
