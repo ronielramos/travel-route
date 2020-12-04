@@ -1,6 +1,6 @@
 import { fileAccess } from '../../../../shared/providers/file-access'
-import TravelRouteRepository from './implementations/TravelRoute.repository'
-import { INITIAL_DATA_SOURCE_ADDRESS } from './utils/initial-data-source-name'
+import TravelRouteRepository from './repositories/implementations/TravelRoute.repository'
+import { INITIAL_DATA_SOURCE_ADDRESS } from './shared-data/repository-shared-data'
 
 const travelRouteRepository = new TravelRouteRepository(fileAccess)
 

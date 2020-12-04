@@ -1,11 +1,11 @@
 import { bestTravelRoute } from '../domain'
 import { travelRouteRepository } from '../infra/database'
-import CreateTravelRoute from './create-travel-route/CreateTravelRoute'
-import GetBestTravelRoute from './get-best-travel-route.ts/GetBestTravelRoute'
+import CreateTravelRouteUseCase from './create-travel-route/CreateTravelRoute.use-case'
+import GetBestTravelRouteUseCase from './get-best-travel-route.ts/GetBestTravelRoute.use-case'
 
-const createTravelRoute = new CreateTravelRoute(travelRouteRepository)
+const createTravelRoute = new CreateTravelRouteUseCase(travelRouteRepository)
 
-const getBestTravelRoute = new GetBestTravelRoute(
+const getBestTravelRoute = new GetBestTravelRouteUseCase(
   bestTravelRoute,
   travelRouteRepository
 )
