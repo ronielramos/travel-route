@@ -14,16 +14,17 @@ export default class TravelRouteController implements IConsoleController {
     private getTravelRoute: IUseCase<TravelRouteToFindDTO, TravelRouteFoundDTO>,
     private logger: ILogger
   ) {
-    this.inputValidator = /[a-z]-[a-z]/gi
+    this.inputValidator = /[a-z]-[a-z]/i
   }
 
   async execute (): Promise<void> {
-    let route = ''
+    while (true) {
+      const route = (await this.consoleAccess.ask('Please enter the route on format "ORIGIN-DESTINATION":'))
+        .trim()
 
-    do {
-      do {
-        route = await this.consoleAccess.ask('Please enter the route on format "ORIGIN-DESTINATION":')
-      } while (!this.isValidTravelRoute(route))
+      const isValid = this.isValidTravelRoute(route)
+
+      if (!isValid) continue
 
       const originAndDestination = route
         .split('-')
@@ -33,14 +34,13 @@ export default class TravelRouteController implements IConsoleController {
         )
 
       const [origin, destination] = originAndDestination as [Airport, Airport]
-
       try {
         const travelRouteFound = await this.getTravelRoute.execute({ origin, destination })
         this.logger.info('best route: ' + travelRouteFound)
       } catch (error) {
         this.logger.error('Ops, route was not found!')
       }
-    } while (true)
+    }
   }
 
   private isValidTravelRoute (route: string): boolean {
