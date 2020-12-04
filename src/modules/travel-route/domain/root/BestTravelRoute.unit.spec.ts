@@ -1,8 +1,9 @@
 import { should } from 'chai'
 
-import { Dollar } from '../domain'
+import { Dollar } from '../BestTravelRoute'
 import { BestTravelRouteFactory } from '../factories/BestTravelRouteFactory'
 import { IBestTravelRoute } from './IBestTravelRoute'
+import { BestTravelRouteError } from '../errors/BestTravelRouteError'
 
 type AirportsAvailableForTest = 'GRU' |'BRC' |'ORL' |'SCL' |'CDG'
 
@@ -60,25 +61,51 @@ describe('UNIT | BestTravelRoute', () => {
         route.should.be.equal('BRC - SCL - ORL > $25')
       })
 
-      it('CDG-GRU', () => {
-        const travelRoute: TravelRouteForTest = { origin: 'CDG', destination: 'GRU' }
-        const route = bestTravelRoute.find(travelRoute, travelRoutes)
-
-        route.should.be.equal('')
-      })
-
-      it('ORL-BRC', () => {
-        const travelRoute: TravelRouteForTest = { origin: 'ORL', destination: 'BRC' }
-        const route = bestTravelRoute.find(travelRoute, travelRoutes)
-
-        route.should.be.equal('')
-      })
-
       it('BRC-GRU', () => {
         const travelRoute: TravelRouteForTest = { origin: 'BRC', destination: 'GRU' }
         const route = bestTravelRoute.find(travelRoute, travelRoutes)
 
         route.should.be.equal('BRC - GRU > $100')
+      })
+    })
+
+    describe('Should not find any path for routes who does not have connections between origin and destination', () => {
+      it('CDG-GRU', () => {
+        const travelRoute: TravelRouteForTest = { origin: 'CDG', destination: 'GRU' }
+        ;(() => bestTravelRoute.find(travelRoute, travelRoutes))
+          .should
+          .throw(BestTravelRouteError)
+      })
+
+      it('ORL-BRC', () => {
+        const travelRoute: TravelRouteForTest = { origin: 'ORL', destination: 'BRC' }
+        ;(() => bestTravelRoute.find(travelRoute, travelRoutes))
+          .should
+          .throw(BestTravelRouteError)
+      })
+    })
+
+    describe('Should not find any path for non saved route', () => {
+      it('NNN-SSS', () => {
+        const travelRoute = { origin: 'NNN', destination: 'SSS' }
+        ;(() => bestTravelRoute.find(travelRoute, travelRoutes))
+          .should
+          .throw(BestTravelRouteError)
+      })
+
+      it('NNN-GRU', () => {
+        const travelRoute = { origin: 'NNN', destination: 'GRU' }
+        ;(() => bestTravelRoute.find(travelRoute, travelRoutes))
+          .should
+          .throw(BestTravelRouteError)
+      })
+
+      it('GRU-SSS', () => {
+        const travelRoute = { origin: 'GRU', destination: 'SSS' }
+
+        ;(() => bestTravelRoute.find(travelRoute, travelRoutes))
+          .should
+          .throw(BestTravelRouteError)
       })
     })
   })
