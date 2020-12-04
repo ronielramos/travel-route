@@ -1,8 +1,9 @@
 import { CreatedTravelRouteDTO } from '../../dtos/CreateTravelRoute.dto'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
-import { Airport } from '../domain'
-import { IGraph } from '../value-objecs/IGraph'
-import { IPath } from '../value-objecs/IPath'
+import { Airport, Node } from '../BestTravelRoute'
+import { IGraph } from '../aggregates/entities/graph/IGraph'
+import { IPath } from '../aggregates/services/path/IPath'
+import { BestTravelRouteError } from '../errors/BestTravelRouteError'
 
 export default class BestTravelRoute {
   constructor (private graph: IGraph, private path: IPath) {}
@@ -15,6 +16,8 @@ export default class BestTravelRoute {
       .createNodes(airportsAvaliable)
       .getOneNode(origin)
 
+    if (!initialNode) throw new BestTravelRouteError(`Origin ${origin} was not found`)
+
     initialNode.price = 0
     initialNode.visited = true
 
@@ -23,7 +26,7 @@ export default class BestTravelRoute {
     do {
       const lastAirport = (visitedAirports[visitedAirports.length - 1]) as Airport
       const travelRoutesForAirport = travelRoutes.filter(route => route.origin === lastAirport)
-      const originNode = this.graph.getOneNode(lastAirport)
+      const originNode = this.graph.getOneNode(lastAirport) as Node
 
       const bestEdge = this.graph
         .createEdges(originNode, travelRoutesForAirport)
@@ -42,6 +45,8 @@ export default class BestTravelRoute {
     } while (!searchWasFinished)
 
     const bestPathToDestination = this.path.findBestPath(destination)
+
+    if (!bestPathToDestination) throw new BestTravelRouteError(`No one path was found to destination: ${destination}`)
 
     return bestPathToDestination ? `${origin} - ${bestPathToDestination}` : ''
   }
