@@ -6,6 +6,6 @@ export default class CommandLineApplication {
 
   async initialize (consoleController: IConsoleController): Promise<void> {
     await consoleController.execute()
-    this.logger.info('Application Initialized!')
+    this.logger.info('Finished!')
   }
 }
