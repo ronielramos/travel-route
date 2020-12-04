@@ -1,8 +1,8 @@
 import { CreatedTravelRouteDTO } from '../../dtos/CreateTravelRoute.dto'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
-import { Airport, Node } from '../BestTravelRoute'
 import { IGraph } from '../aggregates/entities/graph/IGraph'
 import { IPath } from '../aggregates/services/path/IPath'
+import { Airport, Node } from '../BestTravelRoute'
 import { BestTravelRouteError } from '../errors/BestTravelRouteError'
 
 export default class BestTravelRoute {
@@ -46,7 +46,9 @@ export default class BestTravelRoute {
 
     const bestPathToDestination = this.path.findBestPath(destination)
 
-    if (!bestPathToDestination) throw new BestTravelRouteError(`No one path was found to destination: ${destination}`)
+    if (!bestPathToDestination) {
+      throw new BestTravelRouteError(`No one path was found from ${origin} to destination ${destination}`)
+    }
 
     return bestPathToDestination ? `${origin} - ${bestPathToDestination}` : ''
   }
