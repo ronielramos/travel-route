@@ -31,16 +31,4 @@ export class FileAccess implements IFileAccess {
   overWrite (fileAddress: string, data: string): Promise<void> {
     return this.writeFile(fileAddress, data)
   }
-
-  copy (origin: string, destination: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      const readStream = fs.createReadStream(origin)
-      const writeStream = fs.createWriteStream(destination)
-
-      readStream
-        .pipe(writeStream)
-        .on('end', () => resolve())
-        .on('error', (error) => reject(error))
-    })
-  }
 }
