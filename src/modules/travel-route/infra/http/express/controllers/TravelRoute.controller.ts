@@ -1,18 +1,18 @@
 import { NextFunction, Request, Response } from 'express'
 
-import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../../../../dtos/CreateTravelRoute.dto'
+import { CreateTravelRouteDTO, TravelRouteToCreateDTO } from '../../../../dtos/CreateTravelRoute.dto'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../../../dtos/GetTravelRoute.dto'
 import { IUseCase } from '../../../../use-cases/IUseCase'
 
 export default class TravelRouteController {
   constructor (
-    private createTravelRoute: IUseCase<TravelRouteToCreateDTO, CreatedTravelRouteDTO>,
+    private createTravelRoute: IUseCase<TravelRouteToCreateDTO, CreateTravelRouteDTO>,
     private getBestTravelRoute: IUseCase<TravelRouteToFindDTO, TravelRouteFoundDTO>
   ) {}
 
   async create (
     req: Request<never, never, TravelRouteToCreateDTO, never>,
-    res: Response<CreatedTravelRouteDTO>,
+    res: Response<CreateTravelRouteDTO>,
     next: NextFunction
   ) {
     try {

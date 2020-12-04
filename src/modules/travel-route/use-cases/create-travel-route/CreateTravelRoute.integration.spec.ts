@@ -4,8 +4,8 @@ import path from 'path'
 import { promisify } from 'util'
 
 import { fileAccess } from '../../../../shared/providers/file-access'
-import TravelRouteRepository from '../../infra/database/repositories/implementations/TravelRoute.repository'
-import { ITravelRouteRepository } from '../../infra/database/repositories/ITravelRoute.repository'
+import { ITravelRouteRepository } from '../../domain/ITravelRoute.repository'
+import TravelRouteRepository from '../../infra/database/repositories/TravelRoute.repository'
 import CreateTravelRouteUseCase from './CreateTravelRoute.use-case'
 
 describe('INTEGRATION | CreateTravelRoute', () => {

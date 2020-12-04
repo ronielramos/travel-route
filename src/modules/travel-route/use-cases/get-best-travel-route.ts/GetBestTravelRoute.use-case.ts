@@ -1,6 +1,6 @@
 import { IBestTravelRouteFactory } from '../../domain/factories/IBestTravelRouteFactory'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
-import { ITravelRouteRepository } from '../../infra/database/repositories/ITravelRoute.repository'
+import { ITravelRouteRepository } from '../../domain/ITravelRoute.repository'
 import { IUseCase } from '../IUseCase'
 
 export default class GetBestTravelRouteUseCase implements IUseCase<TravelRouteToFindDTO, TravelRouteFoundDTO> {

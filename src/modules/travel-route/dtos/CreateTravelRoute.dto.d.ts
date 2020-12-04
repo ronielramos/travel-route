@@ -11,7 +11,7 @@ export type TravelRouteToCreateDTO = {
  *    price: 100
  * }
  */
-export type CreatedTravelRouteDTO = {
+export type CreateTravelRouteDTO = {
   origin: string
   destination: string
   price: number

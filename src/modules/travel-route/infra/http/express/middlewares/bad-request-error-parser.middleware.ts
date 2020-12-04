@@ -1,6 +1,7 @@
+import { NextFunction, Request, Response } from 'express'
+
+import { BadRequestError } from '../../../../../../shared/infra/http/errors/implementations/BadRequestError'
 import { BestTravelRouteError } from '../../../../domain/errors/BestTravelRouteError'
-import { BadRequestError } from '../../../../../../shared/application/http/errors/implementations/BadRequestError'
-import { Request, Response, NextFunction } from 'express'
 
 export const badRequestErrorParser = (error: Error, _req: Request, _res: Response, next: NextFunction) => {
   const isBestTravelRouteError = error instanceof BestTravelRouteError

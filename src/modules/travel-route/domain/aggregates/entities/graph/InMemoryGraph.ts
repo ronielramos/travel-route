@@ -1,5 +1,5 @@
 import { Airport, Edge, Node } from '../../../BestTravelRoute'
-import { CreatedTravelRouteDTO } from '../../../../dtos/CreateTravelRoute.dto'
+import { CreateTravelRouteDTO } from '../../../../dtos/CreateTravelRoute.dto'
 import { IGraph } from './IGraph'
 
 export class InMemoryGraph implements IGraph {
@@ -11,7 +11,7 @@ export class InMemoryGraph implements IGraph {
     this.nodes = []
   }
 
-  createEdges (originNode: Node, travelRoutesForAirport: CreatedTravelRouteDTO[]) {
+  createEdges (originNode: Node, travelRoutesForAirport: CreateTravelRouteDTO[]) {
     const edge = this.edges.find(edge => edge.visited && edge.destination === originNode)
     const priceUntilNow = edge?.price ?? 0
 

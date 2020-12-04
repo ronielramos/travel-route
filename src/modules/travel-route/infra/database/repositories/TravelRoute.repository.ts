@@ -1,6 +1,6 @@
-import { IFileAccess } from '../../../../../../shared/providers/file-access/IFileAccess'
-import { CreatedTravelRouteDTO, TravelRouteToCreateDTO } from '../../../../dtos/CreateTravelRoute.dto'
-import { ITravelRouteRepository } from '../ITravelRoute.repository'
+import { IFileAccess } from '../../../../../shared/providers/file-access/IFileAccess'
+import { ITravelRouteRepository } from '../../../domain/ITravelRoute.repository'
+import { CreateTravelRouteDTO } from '../../../dtos/CreateTravelRoute.dto'
 
 export default class TravelRouteRepository implements ITravelRouteRepository {
   private fileAddress?: string
@@ -18,22 +18,15 @@ export default class TravelRouteRepository implements ITravelRouteRepository {
       .find(fileName => fileName)
   }
 
-  async create (data: TravelRouteToCreateDTO): Promise<CreatedTravelRouteDTO> {
+  async create ({ origin, destination, price }: CreateTravelRouteDTO): Promise<void> {
     if (!this.fileAddress) throw new Error('File to persist data was not provided!')
 
-    const [origin, destination] = data.routeName.split('-') as [string, string]
-    const routeToSaveOnFile = `\n${origin},${destination},${data.routePrice}`
+    const routeToSaveOnFile = `\n${origin},${destination},${price}`
 
     await this.fileAccess.write(this.fileAddress, routeToSaveOnFile)
-
-    return {
-      origin,
-      destination,
-      price: data.routePrice
-    }
   }
 
-  async getAll (): Promise<CreatedTravelRouteDTO[]> {
+  async getAll (): Promise<CreateTravelRouteDTO[]> {
     if (!this.fileAddress) throw new Error('File to persist data was not provided!')
 
     const text = await this.fileAccess.read(this.fileAddress)

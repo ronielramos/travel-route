@@ -1,7 +1,7 @@
 import {
   initializePersistenceFileController
-} from '../../../../../modules/travel-route/application/console/implementations/initial'
-import { logger } from '../../../../infra/logger'
+} from '../../../../../modules/travel-route/infra/console/implementations/initial'
+import { logger } from '../../../logger'
 import CommandLineApplication from '../../applications/ConsoleApplication'
 
 const commandLineApplication = new CommandLineApplication(logger)

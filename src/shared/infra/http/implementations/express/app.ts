@@ -1,10 +1,10 @@
 import { Router } from 'express'
 
-import travelRouteRouter from '../../../../../modules/travel-route/application/http/express/routes/travelRoute.routes'
+import travelRouteRouter from '../../../../../modules/travel-route/infra/http/express/routes/travelRoute.routes'
 import ConsoleLogger from '../../../../infra/logger/implementations/ConsoleLogger'
-import ExpressServer from './server/ExpressServer'
 import handleHttpError from './handlers/handleHttpError'
 import handleUncaughtException from './handlers/handleUncaughtException'
+import ExpressServer from './server/ExpressServer'
 
 const logger = new ConsoleLogger()
 const expressServer = new ExpressServer(logger)

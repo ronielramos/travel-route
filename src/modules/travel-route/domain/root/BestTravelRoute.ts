@@ -1,4 +1,4 @@
-import { CreatedTravelRouteDTO } from '../../dtos/CreateTravelRoute.dto'
+import { CreateTravelRouteDTO } from '../../dtos/CreateTravelRoute.dto'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
 import { IGraph } from '../aggregates/entities/graph/IGraph'
 import { IPath } from '../aggregates/services/path/IPath'
@@ -8,7 +8,7 @@ import { BestTravelRouteError } from '../errors/BestTravelRouteError'
 export default class BestTravelRoute {
   constructor (private graph: IGraph, private path: IPath) {}
 
-  find ({ origin, destination }: TravelRouteToFindDTO, travelRoutes: CreatedTravelRouteDTO[]): TravelRouteFoundDTO {
+  find ({ origin, destination }: TravelRouteToFindDTO, travelRoutes: CreateTravelRouteDTO[]): TravelRouteFoundDTO {
     const visitedAirports = [origin]
     const airportsAvaliable = this.getAirportsAvaliable(travelRoutes)
 
@@ -53,7 +53,7 @@ export default class BestTravelRoute {
     return bestPathToDestination ? `${origin} - ${bestPathToDestination}` : ''
   }
 
-  private getAirportsAvaliable (travelRoutes: CreatedTravelRouteDTO[]) {
+  private getAirportsAvaliable (travelRoutes: CreateTravelRouteDTO[]) {
     const airportsAvaliable = new Set<Airport>()
 
     travelRoutes.forEach(route => {

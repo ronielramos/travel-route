@@ -5,9 +5,9 @@ import path from 'path'
 import { fileAccess } from '../../../../shared/providers/file-access'
 import { BestTravelRouteError } from '../../domain/errors/BestTravelRouteError'
 import { BestTravelRouteFactory } from '../../domain/factories/BestTravelRouteFactory'
+import { ITravelRouteRepository } from '../../domain/ITravelRoute.repository'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
-import TravelRouteRepository from '../../infra/database/repositories/implementations/TravelRoute.repository'
-import { ITravelRouteRepository } from '../../infra/database/repositories/ITravelRoute.repository'
+import TravelRouteRepository from '../../infra/database/repositories/TravelRoute.repository'
 import { IUseCase } from '../IUseCase'
 import GetBestTravelRouteUseCase from './GetBestTravelRoute.use-case'
 
@@ -38,8 +38,9 @@ describe('INTEGRATION | GetBestTravelRoute', () => {
     await travelRouteRepository.initialize(sourceOfPathToFile)
 
     await travelRouteRepository.create({
-      routeName: 'GRU-BRC',
-      routePrice: 10
+      origin: 'GRU',
+      destination: 'BRC',
+      price: 10
     })
 
     getBestTravelRouteUseCase = new GetBestTravelRouteUseCase(
