@@ -2,6 +2,7 @@
 import { NextFunction, Request, Response } from 'express'
 
 import { HttpError } from '../../../errors/IHttpError'
+import { logger } from '../../../../../infra/logger/index'
 
 export default function handleHttpError (
   error: HttpError,
@@ -9,6 +10,7 @@ export default function handleHttpError (
   res: Response,
   _next: NextFunction
 ): void {
+  logger.error(error)
   const statusCode = error.statusCode ?? 500
   const message = statusCode === 500 ? 'Internal Server Error' : error.message
 
