@@ -12,12 +12,23 @@
 
 ## How to start
 
+### Before all
+
+```text
+npm install
+npm run build // for production
+```
+
 ### Console Interface
 
 ```text
 // To initialize the database
 
-npm start:init // To choose file
+// for development
+npm run dev:init
+
+// for production
+npm run start:init
 
 Should present: insert filename with the list of travel routes: // insert filename here
 
@@ -27,7 +38,11 @@ On success: Finished!
 ```text
 // To execute travel route searcher
 
-npm start:console
+// for production
+npm run start:console
+
+// for development
+// npm run dev:console
 
 Should present: Please enter the route on format "ORIGIN-DESTINATION": // insert route here
 
@@ -38,17 +53,12 @@ On error: Ops, this route was not found!
 ### API Rest Interface
 
 ```text
-// Setup for production
-
-npm install
-npm run build
+// for production
 npm run start:http
 ```
 
 ```text
-// Setup for development
-
-npm install
+// for development
 npm run dev:http
 ```
 
