@@ -42,7 +42,7 @@ On success: Finished!
 npm run start:console
 
 // for development
-// npm run dev:console
+npm run dev:console
 
 Should present: Please enter the route on format "ORIGIN-DESTINATION": // insert route here
 
@@ -55,9 +55,7 @@ On error: Ops, this route was not found!
 ```text
 // for production
 npm run start:http
-```
 
-```text
 // for development
 npm run dev:http
 ```
@@ -161,7 +159,7 @@ Output on server error (status code 500)
 
 ### Tests
 
-* Most focused on domain to guarantee the most important
+* focused on domain to guarantee the most important part of the application
 * .unit.spec to unit test and .integration.spec for integration tests
 
 ```text
@@ -171,13 +169,16 @@ npm install
 npm run test:unit
 npm run test:integration
 
-npm run test // for all tests
-npm run test:coverage // for all tests and generate coverage report
+// for all tests
+npm run test
+
+// for all tests and generate coverage report
+npm run test:coverage
 ```
 
 ## Conventions
 
-### Lint
+### Style
 
 * eslint with [standard](https://standardjs.com) rules
 
