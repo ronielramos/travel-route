@@ -2,7 +2,8 @@
 
 ## Important
 
-* file what will be used as data source must be on root directory
+* Dijkstra is the algorithm what inspires the search solution
+* file what will be used as the database must be on "root" directory of the project
 * route price is in dollar
 
 ## Requirements
@@ -14,13 +15,13 @@
 ### Console Interface
 
 ```text
-// To initialize data source
+// To initialize the database
 
 npm start:init // To choose file
 
 Should present: insert filename with the list of travel routes: // insert filename here
 
-On sucess: Finished!
+On success: Finished!
 ```
 
 ```text
@@ -31,7 +32,7 @@ npm start:console
 Should present: Please enter the route on format "ORIGIN-DESTINATION": // insert route here
 
 On sucess: best route: XXX - XXX > $10
-On error: Ops, route was not found!
+On error: Ops, this route was not found!
 ```
 
 ### API Rest Interface
@@ -63,16 +64,16 @@ npm run dev:http
 
 Input:
 
-```json
+```JSON
 {
   "routeName": "GRU-CDG",
   "routePrice": 50
 }
 ```
 
-Output on sucess (status code 200)
+Output on success (status code 200)
 
-```json
+```JSON
 {
   "origin": "GRU",
   "destination": "CDG",
@@ -82,7 +83,7 @@ Output on sucess (status code 200)
 
 Output on invalid param (status code 400)
 
-```json
+```JSON
 {
   "statusCode": 400,
   "message": "celebrate request validation failed",
@@ -99,7 +100,7 @@ Output on invalid param (status code 400)
 
 Output on server error (status code 500)
 
-```json
+```JSON
 {
   "message": "Internal Server Error",
 }
@@ -107,9 +108,9 @@ Output on server error (status code 500)
 
 #### GET /v1/travel-route/ORL-SCL/priceless - Return the best route
 
-Output on sucess (status code 200)
+Output on success (status code 200)
 
-```json
+```JSON
 {
   "bestTravelFound": "GRU - BRC - SCL - ORL - CDG"
 }
@@ -117,7 +118,7 @@ Output on sucess (status code 200)
 
 Output on invalid param (status code 400)
 
-```json
+```JSON
 {
   "statusCode": 400,
   "message": "celebrate request validation failed",
@@ -132,9 +133,9 @@ Output on invalid param (status code 400)
 }
 ```
 
-Output on error to find travel route (status code 400)
+Output on the error to find travel route (status code 400)
 
-```json
+```JSON
 {
   "message": "message"
 }
@@ -142,28 +143,129 @@ Output on error to find travel route (status code 400)
 
 Output on server error (status code 500)
 
-```json
+```JSON
 {
   "message": "Internal Server Error",
 }
 ```
 
-## Arquitechture Overview
+### Tests
+
+* Most focused on domain to guarantee the most important
+* .unit.spec to unit test and .integration.spec for integration tests
+
+```text
+// How to run
+
+npm install
+npm run test:unit
+npm run test:integration
+
+npm run test // for all tests
+npm run test:coverage // for all tests and generate coverage report
+```
+
+## Conventions
+
+### Lint
+
+* eslint with [standard](https://standardjs.com) rules
+
+### Folders
+
+* kebab-case for all folders
+
+### Files
+
+* PascalCase for files with an exported class, interface, or type definitions
+* Filename with ".d" means that file have definitions
+* Filename with the initial "I" mean that file have an interface
+* camelCase for files with an exported function
+* Filename using the pattern name.typeCamelCase.ts
+* Tests using the pattern name.type-of-test.spec.ts
+
+## Architecture Overview
+
+### Introduction
+
+The architecture has been inspired by Clean Architecture and DDD concepts. This choice considers we have a well-defined domain, the algorithm what will find routes, many possibilities to interact with this application, console and HTTP rest API, and we have many possible solutions to improve the implementation with external services, like a graph-based database. With that, this choice makes it possible to grow and change implementations more easily.
+
+### Layers explained
+
+* Presenters/Controllers/Gateways - infra and provider's folder
+* Use cases - use-cases folder
+* Entities - domain folder
+
+### First level
+
+That level contains the separation of modules and shared, to clarify what can be, for any module, used and what has a specific logic
+
+```text
+|-- src
+|---- modules
+|---- shared
+```
+
+### Second Level
+
+modules - We have our first module called "travel-route" which will contain the specific logic
+shared - We have the separation of two concepts, infra, and providers. Providers give me some external feature access, and infra, access to any external resource or allow external access to our application.
 
 ```text
 |-- src
 |---- modules
 |------ travel-route
-|-------- application
+|---- shared
+|------ infra
+|------ providers
+```
+
+### Third Level
+
+travel-route - Used concepts of DDD to design this module:
+
+* domain contains the most important, the enterprise business logic
+* use cases have the responsibility to orchestrate the implementation of  application business logic
+* infra should contain all logic responsible for external access to this module or vice versa
+* dtos are responsible for what will be sent or received on communication between layers
+
+```text
+|-- src
+|---- modules
+|------ travel-route
 |-------- domain
 |-------- dtos
 |-------- infra
 |-------- use-cases
 |---- shared
-|------ application
 |------ infra
+|-------- console
+|-------- http
+|-------- logger
 |------ providers
+|-------- console-access
+|-------- file-access
+```
 
+### Domain
 
+* entities/graph - contain an implementation of the Graph Structure what will be used by the root
+* services/path - have an implementation of the algorithm what find the best route between the all found
+* root - have the responsibility to implements the algorithm used on the search for the route with the best price
+* factories - used to create a domain root instance with services and entities injected
+
+```text
+|-- src
+|---- modules
+|------ travel-route
+|-------- domain
+|---------- aggregates
+|------------ entities
+|-------------- graph
+|------------ services
+|-------------- path
+|---------- errors
+|---------- factories
+|---------- root
 
 ```
