@@ -1,7 +1,7 @@
-import { IConsoleAccess } from '../../../../../../shared/providers/console-access/IConsoleAccess'
-import { IFileAccess } from '../../../../../../shared/providers/file-access/IFileAccess'
-import { INITIAL_DATA_SOURCE_ADDRESS } from '../../../../infra/database/shared-data/repository-shared-data'
-import { IConsoleController } from '../../IConsoleController'
+import { IConsoleAccess } from '../../../../../../shared/providers/console-access/IConsoleAccess.provider'
+import { IFileAccess } from '../../../../../../shared/providers/file-access/IFileAccess.provider'
+import { INITIAL_DATA_SOURCE_ADDRESS } from '../../../database/shared-data/repository.shared-data'
+import { IConsoleController } from '../../IConsole.controller'
 
 export default class InitializePersistenceFileController implements IConsoleController {
   constructor (

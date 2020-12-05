@@ -1,4 +1,4 @@
-import { IBestTravelRouteFactory } from '../../domain/factories/IBestTravelRouteFactory'
+import { IBestTravelRouteFactory } from '../../domain/factories/IBestTravelRoute.factory'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
 import { ITravelRouteRepository } from '../../domain/ITravelRoute.repository'
 import { IUseCase } from '../IUseCase'

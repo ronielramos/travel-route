@@ -1,9 +1,10 @@
 import { CreateTravelRouteDTO } from '../../dtos/CreateTravelRoute.dto'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
+import { Node } from '../aggregates/entities/graph/Graph'
 import { IGraph } from '../aggregates/entities/graph/IGraph'
 import { IPath } from '../aggregates/services/path/IPath'
-import { Airport, Node } from '../BestTravelRoute'
-import { BestTravelRouteError } from '../errors/BestTravelRouteError'
+import { Airport } from '../BestTravelRoute'
+import { BestTravelRouteError } from '../errors/BestTravelRoute.error'
 
 export default class BestTravelRoute {
   constructor (private graph: IGraph, private path: IPath) {}

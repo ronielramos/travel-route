@@ -6,7 +6,7 @@ import { promisify } from 'util'
 import { fileAccess } from '../../../../shared/providers/file-access'
 import { ITravelRouteRepository } from '../../domain/ITravelRoute.repository'
 import TravelRouteRepository from '../../infra/database/repositories/TravelRoute.repository'
-import CreateTravelRouteUseCase from './CreateTravelRoute.use-case'
+import CreateTravelRouteUseCase from './CreateTravelRoute.useCase'
 
 describe('INTEGRATION | CreateTravelRoute', () => {
   let travelRouteRepository: ITravelRouteRepository

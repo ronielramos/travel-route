@@ -1,5 +1,6 @@
-import { Airport, Edge, Node } from '../../../BestTravelRoute'
 import { CreateTravelRouteDTO } from '../../../../dtos/CreateTravelRoute.dto'
+import { Airport } from '../../../BestTravelRoute'
+import { Edge, Node } from './Graph'
 import { IGraph } from './IGraph'
 
 export class InMemoryGraph implements IGraph {

@@ -1,4 +1,4 @@
-import { IFileAccess } from '../../../../../shared/providers/file-access/IFileAccess'
+import { IFileAccess } from '../../../../../shared/providers/file-access/IFileAccess.provider'
 import { ITravelRouteRepository } from '../../../domain/ITravelRoute.repository'
 import { CreateTravelRouteDTO } from '../../../dtos/CreateTravelRoute.dto'
 

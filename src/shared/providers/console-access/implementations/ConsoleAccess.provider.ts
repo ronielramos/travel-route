@@ -1,6 +1,6 @@
 import readline from 'readline'
 
-import { IConsoleAccess } from '../IConsoleAccess'
+import { IConsoleAccess } from '../IConsoleAccess.provider'
 
 export class ConsoleAccess implements IConsoleAccess {
   readLineInterface: readline.Interface

@@ -3,13 +3,13 @@ import chaiAsPromised from 'chai-as-promised'
 import path from 'path'
 
 import { fileAccess } from '../../../../shared/providers/file-access'
-import { BestTravelRouteError } from '../../domain/errors/BestTravelRouteError'
-import { BestTravelRouteFactory } from '../../domain/factories/BestTravelRouteFactory'
+import { BestTravelRouteError } from '../../domain/errors/BestTravelRoute.error'
+import { BestTravelRouteFactory } from '../../domain/factories/BestTravelRoute.factory'
 import { ITravelRouteRepository } from '../../domain/ITravelRoute.repository'
 import { TravelRouteFoundDTO, TravelRouteToFindDTO } from '../../dtos/GetTravelRoute.dto'
 import TravelRouteRepository from '../../infra/database/repositories/TravelRoute.repository'
 import { IUseCase } from '../IUseCase'
-import GetBestTravelRouteUseCase from './GetBestTravelRoute.use-case'
+import GetBestTravelRouteUseCase from './GetBestTravelRoute.useCase'
 
 describe('INTEGRATION | GetBestTravelRoute', () => {
   let travelRouteRepository: ITravelRouteRepository

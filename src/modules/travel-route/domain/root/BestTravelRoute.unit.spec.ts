@@ -1,9 +1,9 @@
 import { should } from 'chai'
 
 import { Dollar } from '../BestTravelRoute'
-import { BestTravelRouteFactory } from '../factories/BestTravelRouteFactory'
-import { IBestTravelRoute } from './IBestTravelRoute'
-import { BestTravelRouteError } from '../errors/BestTravelRouteError'
+import { BestTravelRouteFactory } from '../factories/BestTravelRoute.factory'
+import { IBestTravelRoute } from './IBestTravelRoute.root'
+import { BestTravelRouteError } from '../errors/BestTravelRoute.error'
 
 type AirportsAvailableForTest = 'GRU' |'BRC' |'ORL' |'SCL' |'CDG'
 

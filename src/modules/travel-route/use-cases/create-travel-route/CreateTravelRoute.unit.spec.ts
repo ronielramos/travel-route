@@ -2,7 +2,7 @@ import { should } from 'chai'
 
 import { TravelRouteToCreateDTO } from '../../dtos/CreateTravelRoute.dto'
 import FakeTravelRouteRepository from '../../infra/database/repositories/FakeTravelRoute.repository'
-import CreateTravelRouteUseCase from './CreateTravelRoute.use-case'
+import CreateTravelRouteUseCase from './CreateTravelRoute.useCase'
 
 describe('UNIT | CreateTravelRoute', () => {
   before(() => {

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { promisify } from 'util'
 
-import { IFileAccess } from '../IFileAccess'
+import { IFileAccess } from '../IFileAccess.provider'
 
 export class FileAccess implements IFileAccess {
   private readonly readFile: (fileAddress: string) => Promise<Buffer>

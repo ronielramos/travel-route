@@ -1,4 +1,4 @@
-import { IConsoleController } from '../../../../modules/travel-route/infra/console/IConsoleController'
+import { IConsoleController } from '../../../../modules/travel-route/infra/console/IConsole.controller'
 import ILogger from '../../logger/ILogger'
 
 export default class CommandLineApplication {

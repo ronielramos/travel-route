@@ -1,9 +1,9 @@
-import { InMemoryGraph } from '../aggregates/entities/graph/InMemoryGraph'
+import { InMemoryGraph } from '../aggregates/entities/graph/InMemory.graph'
 import { IGraph } from '../aggregates/entities/graph/IGraph'
-import BestTravelRoute from '../root/BestTravelRoute'
-import { IBestTravelRoute } from '../root/IBestTravelRoute'
+import BestTravelRoute from '../root/BestTravelRoute.root'
+import { IBestTravelRoute } from '../root/IBestTravelRoute.root'
 import { IPath } from '../aggregates/services/path/IPath'
-import { InMemoryPath } from '../aggregates/services/path/InMemoryPath'
+import { InMemoryPath } from '../aggregates/services/path/InMemory.path'
 
 export class BestTravelRouteFactory {
   makeBestTravelRoute (): IBestTravelRoute {

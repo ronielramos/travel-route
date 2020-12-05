@@ -1,4 +1,5 @@
-import { Airport, Edge } from '../../../BestTravelRoute'
+import { Airport } from '../../../BestTravelRoute'
+import { Edge } from '../../entities/graph/Graph'
 import { IPath } from './IPath'
 
 export class InMemoryPath implements IPath {

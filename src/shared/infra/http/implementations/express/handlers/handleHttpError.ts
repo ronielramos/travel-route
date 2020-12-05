@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from 'express'
 
-import { HttpError } from '../../../errors/IHttpError'
+import { HttpError } from '../../../errors/IHttp.error'
 import { logger } from '../../../../../infra/logger/index'
 
 export default function handleHttpError (
